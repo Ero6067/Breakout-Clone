@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float screenWidthInUnits = 16f;
     [SerializeField] float xMin = 1, xMax = 15;
 
-    [SerializeField] bool mouseIsActive = false;
-    [SerializeField] bool controllerIsActive = true;
+    [SerializeField] bool mouseIsActive = true;
+    [SerializeField] bool controllerIsActive = false;
 
     [SerializeField] Vector2 moveVal;
     [SerializeField] float moveSpeed = 5f;
