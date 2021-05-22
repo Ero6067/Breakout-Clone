@@ -46,7 +46,6 @@ public class Ball : MonoBehaviour
     {
         if (!hasStarted)
         {
-            Debug.Log("Shots Fired");
             //Unity zeroing the vec2 vars in the inspector??
             GetComponent<Rigidbody2D>().velocity = new Vector2(xPush, yPush);
             hasStarted = true;
