@@ -9,8 +9,8 @@ public class Ball : MonoBehaviour
     // config params
     [SerializeField] private PlayerController paddle1;
 
-    [SerializeField] private float xPush = 2f;
-    [SerializeField] private float yPush = 15f;
+    [SerializeField] private float xSpeed = 2f;
+    [SerializeField] private float ySpeed = 15f;
 
     private bool hasStarted = false;
     private Vector2 startPos;
@@ -25,7 +25,9 @@ public class Ball : MonoBehaviour
     private void Update()
     {
         if (!hasStarted)
+        {
             LockBallToPaddle();
+        }
     }
 
     private void LockBallToPaddle()
@@ -46,9 +48,36 @@ public class Ball : MonoBehaviour
     {
         if (!hasStarted)
         {
-            //Unity zeroing the vec2 vars in the inspector??
-            GetComponent<Rigidbody2D>().velocity = new Vector2(xPush, yPush);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
             hasStarted = true;
         }
     }
+
+    #region Arkanoid
+
+    //https://noobtuts.com/unity/2d-arkanoid-game
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "racket")
+        {
+            // Calculate hit Factor
+            float x = hitFactor(transform.position,
+                                collision.transform.position,
+                                collision.collider.bounds.size.x);
+
+            // Calculate direction, set length to 1
+            Vector2 dir = new Vector2(x, 1).normalized;
+
+            if (hasStarted)
+                // Set Velocity with dir * speed
+                GetComponent<Rigidbody2D>().velocity = dir * xSpeed;
+        }
+    }
+
+    private float hitFactor(Vector2 ballPos, Vector2 racketPos, float racketWidth)
+    {
+        return (ballPos.x - racketPos.x) / racketWidth;
+    }
+
+    #endregion Arkanoid
 }
