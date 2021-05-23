@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(AudioSource))]
 public class Ball : MonoBehaviour
 {
     // config params
@@ -11,14 +12,20 @@ public class Ball : MonoBehaviour
 
     [SerializeField] private float xSpeed = 2f;
     [SerializeField] private float ySpeed = 15f;
-
+    [SerializeField] private float ballOffset = 0.5f;
+    [SerializeField] private AudioClip[] ballSounds;
     private bool hasStarted = false;
     private Vector2 startPos;
-    [SerializeField] private float ballOffset = 0.5f;
+    private AudioSource myAudioSource;
 
     private void Awake()
     {
         PlaceBallOnStartingArea();
+    }
+
+    private void Start()
+    {
+        myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -42,6 +49,16 @@ public class Ball : MonoBehaviour
         startPos = new Vector2(paddle1.transform.position.x, paddle1.transform.position.y + ballOffset);
         transform.position = startPos;
         Vector2 paddleToBallVec = transform.position - paddle1.transform.position;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!hasStarted)
+        {
+            //TODO make a better random system
+            AudioClip clip = ballSounds[UnityEngine.Random.Range(0, ballSounds.Length)];
+            myAudioSource.PlayOneShot(clip);
+        }
     }
 
     public void OnFire(InputAction.CallbackContext context)
