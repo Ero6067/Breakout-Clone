@@ -7,27 +7,25 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int breakableBlocks;
 
+    private SceneLoader sceneLoader;
+
+    private void Update()
+    {
+        sceneLoader = FindObjectOfType<SceneLoader>();
+
+        if (breakableBlocks <= 0)
+        {
+            sceneLoader.LoadNextLevel();
+        }
+    }
+
     public void CountBreakableBlocks()
     {
         breakableBlocks++;
     }
 
-    public void RemoveBlock()
+    public void BlockDestroyed()
     {
         breakableBlocks--;
-    }
-
-    private void Update()
-    {
-        if (breakableBlocks == 0)
-        {
-            Debug.Log("Zero");
-            LoadNextLevel();
-        }
-    }
-
-    public void LoadNextLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

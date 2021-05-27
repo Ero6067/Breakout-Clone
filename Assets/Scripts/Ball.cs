@@ -39,6 +39,10 @@ public class Ball : MonoBehaviour
     private void LockBallToPaddle()
     {
         Vector2 paddlePos = new Vector2(paddle1.transform.position.x, transform.position.y);
+        if (!hasStarted)
+        {
+            paddlePos.x = Mathf.Clamp(paddlePos.x, 1.5f, 14.5f);
+        }
 
         transform.position = paddlePos;
     }
