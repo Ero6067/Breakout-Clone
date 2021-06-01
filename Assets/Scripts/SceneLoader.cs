@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class SceneLoader : MonoBehaviour
 {
+    private PlayerController playerController;
+
+    private void Update()
+    {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    playerController.mouseIsActive = true;
+        //}
+    }
+
     public void LoadNextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;

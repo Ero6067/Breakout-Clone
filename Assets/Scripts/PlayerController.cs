@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float screenWidthInUnits = 16f;
     [SerializeField] private float xMin = 1, xMax = 15;
 
-    [SerializeField] private bool mouseIsActive = true;
-    [SerializeField] private bool controllerIsActive = false;
+    [SerializeField] public bool mouseIsActive = false;
+    [SerializeField] public bool gamepadIsActive = true;
 
     [SerializeField] private Vector2 moveVal;
     [SerializeField] private float moveSpeed = 5f;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
             transform.position = paddlePos;
         }
-        else if (controllerIsActive)
+        else if (gamepadIsActive)
         {
             rb.velocity = new Vector2(inputX * moveSpeed, rb.velocity.y);
             Vector2 clampedPos = transform.position;

@@ -60,7 +60,6 @@ public class Ball : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
             hasStarted = true;
-            Debug.Log(hasStarted);
         }
     }
 
