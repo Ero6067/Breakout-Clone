@@ -23,10 +23,6 @@ public class Ball : MonoBehaviour
         PlaceBallOnStartingArea();
     }
 
-    private void Start()
-    {
-    }
-
     // Update is called once per frame
     private void Update()
     {
@@ -63,8 +59,6 @@ public class Ball : MonoBehaviour
         }
     }
 
-    #region Arkanoid
-
     //https://noobtuts.com/unity/2d-arkanoid-game
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -98,6 +92,4 @@ public class Ball : MonoBehaviour
     {
         return (ballPos.x - racketPos.x) / racketWidth;
     }
-
-    #endregion Arkanoid
 }

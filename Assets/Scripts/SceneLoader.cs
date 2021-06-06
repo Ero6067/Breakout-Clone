@@ -7,14 +7,7 @@ using System.IO;
 public class SceneLoader : MonoBehaviour
 {
     private PlayerController playerController;
-
-    private void Update()
-    {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    playerController.mouseIsActive = true;
-        //}
-    }
+    private GameSession gameStatus;
 
     public void LoadNextLevel()
     {
@@ -25,6 +18,12 @@ public class SceneLoader : MonoBehaviour
     public void LoadMenuScreen(string menuOption)
     {
         SceneManager.LoadScene(menuOption);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(2);
+        FindObjectOfType<GameSession>().ResetGame();
     }
 
     public void QuitGame()

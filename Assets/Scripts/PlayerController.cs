@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float xMin = 1, xMax = 15;
 
     [SerializeField] public bool mouseIsActive = false;
-    [SerializeField] public bool gamepadIsActive = true;
 
     [SerializeField] private Vector2 moveVal;
     [SerializeField] private float moveSpeed = 5f;
@@ -40,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
             transform.position = paddlePos;
         }
-        else if (gamepadIsActive)
+        else
         {
             rb.velocity = new Vector2(inputX * moveSpeed, rb.velocity.y);
             Vector2 clampedPos = transform.position;
@@ -52,5 +51,11 @@ public class PlayerController : MonoBehaviour
     public void OnMovement(InputAction.CallbackContext context)
     {
         inputX = context.ReadValue<Vector2>().x;
+    }
+
+    public void OnToggleControlType(InputAction.CallbackContext context)
+    {
+        mouseIsActive = !mouseIsActive;
+        Debug.Log(mouseIsActive);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [SerializeField] private AudioClip breakSound;
-    [SerializeField] private GameStatus gameStatus;
+    [SerializeField] private GameSession gameStatus;
     private LevelManager level;
     [SerializeField] private int pointValue = 5;
 
@@ -14,7 +14,7 @@ public class Block : MonoBehaviour
     {
         level = FindObjectOfType<LevelManager>();
         level.CountBreakableBlocks();
-        gameStatus = FindObjectOfType<GameStatus>();
+        gameStatus = FindObjectOfType<GameSession>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
