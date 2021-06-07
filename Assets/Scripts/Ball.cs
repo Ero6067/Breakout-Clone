@@ -59,37 +59,20 @@ public class Ball : MonoBehaviour
         }
     }
 
-    //https://noobtuts.com/unity/2d-arkanoid-game
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "racket")
+        if (hasStarted)
         {
-            // Calculate hit Factor
-            float x = hitFactor(transform.position,
-                                collision.transform.position,
-                                collision.collider.bounds.size.x);
-
-            // Calculate direction, set length to 1
-            Vector2 dir = new Vector2(x, 1).normalized;
-
-            if (hasStarted)
-            // Set Velocity with dir * speed
-            {
-                GetComponent<Rigidbody2D>().velocity = dir * xSpeed;
-            }
-        }
-        else if (hasStarted)
-        {
-            if (collision.gameObject.tag != "Block")
-            {
-                AudioClip clip = ballSounds[UnityEngine.Random.Range(0, ballSounds.Length)];
-                audioSource.PlayOneShot(clip);
-            }
+            PlayBounceSounds(collision);
         }
     }
 
-    private float hitFactor(Vector2 ballPos, Vector2 racketPos, float racketWidth)
+    private void PlayBounceSounds(Collision2D collision)
     {
-        return (ballPos.x - racketPos.x) / racketWidth;
+        if (collision.gameObject.tag != "Breakable")
+        {
+            AudioClip clip = ballSounds[UnityEngine.Random.Range(0, ballSounds.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,17 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [SerializeField] private AudioClip breakSound;
+    [SerializeField] private AudioClip partialBreakSound;
     [SerializeField] private GameObject blockParticlesVfx;
     [SerializeField] private GameSession gameStatus;
     [SerializeField] private int pointValue = 5;
     [SerializeField] private int maxHits;
 
+    [SerializeField] private Sprite[] hitSprites;
+
     private LevelManager level;
 
-    [SerializeField] private int timesHit; //exposed for bdebugging only
+    [SerializeField] private int timesHit; //exposed for debugging only
 
     private void Awake()
     {
@@ -49,6 +53,17 @@ public class Block : MonoBehaviour
         {
             DestroyBlock();
         }
+        else
+        {
+            ShowNextHitSprite();
+            AudioSource.PlayClipAtPoint(partialBreakSound, Camera.main.transform.position);
+        }
+    }
+
+    private void ShowNextHitSprite()
+    {
+        int spriteIndex = timesHit - 1;
+        GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
     }
 
     private void DestroyBlock()
