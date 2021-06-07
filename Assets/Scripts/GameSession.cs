@@ -6,7 +6,7 @@ using TMPro;
 public class GameSession : MonoBehaviour
 {
     //Range turns the var into a slider in the inspector
-    [Range(0.1f, 5f)] [SerializeField] private float gameSpeed = 1f;
+    //[Range(0.1f, 5f)] [SerializeField] private float gameSpeed = 1f;
 
     private PlayerController playerController;
 

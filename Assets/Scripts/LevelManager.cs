@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void CountBreakableBlocks()
+    public void CountBlocks()
     {
         breakableBlocks++;
     }

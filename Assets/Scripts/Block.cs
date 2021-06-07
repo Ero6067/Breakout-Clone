@@ -8,19 +8,47 @@ public class Block : MonoBehaviour
     [SerializeField] private AudioClip breakSound;
     [SerializeField] private GameObject blockParticlesVfx;
     [SerializeField] private GameSession gameStatus;
-    private LevelManager level;
     [SerializeField] private int pointValue = 5;
+    [SerializeField] private int maxHits;
+
+    private LevelManager level;
+
+    [SerializeField] private int timesHit; //exposed for bdebugging only
+
+    private void Awake()
+    {
+        gameStatus = FindObjectOfType<GameSession>();
+    }
 
     private void Start()
     {
+        CountBreakableBlocks();
+    }
+
+    private void CountBreakableBlocks()
+    {
         level = FindObjectOfType<LevelManager>();
-        level.CountBreakableBlocks();
-        gameStatus = FindObjectOfType<GameSession>();
+        if (tag == "Breakable")
+        {
+            level.CountBlocks();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        DestroyBlock();
+        if (tag == "Breakable")
+        {
+            HandleHit();
+        }
+    }
+
+    private void HandleHit()
+    {
+        timesHit++;
+        if (timesHit >= maxHits)
+        {
+            DestroyBlock();
+        }
     }
 
     private void DestroyBlock()
