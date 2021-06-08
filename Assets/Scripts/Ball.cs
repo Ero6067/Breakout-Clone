@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Ball : MonoBehaviour
@@ -12,11 +9,20 @@ public class Ball : MonoBehaviour
     [SerializeField] private float xSpeed = 2f;
     [SerializeField] private float ySpeed = 15f;
     [SerializeField] private float ballOffset = 0.5f;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private float randomFactor = 0.2f;
     [SerializeField] private AudioClip[] ballSounds;
+
+    private AudioSource audioSource;
+    private Rigidbody2D rb;
 
     private bool hasStarted = false;
     private Vector2 startPos;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void Awake()
     {
@@ -54,8 +60,8 @@ public class Ball : MonoBehaviour
     {
         if (!hasStarted)
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(xSpeed, ySpeed);
             hasStarted = true;
+            rb.velocity = new Vector2(xSpeed, ySpeed);
         }
     }
 
@@ -69,10 +75,17 @@ public class Ball : MonoBehaviour
 
     private void PlayBounceSounds(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Breakable")
+        Vector2 velocityTweak = new Vector2
+            (Random.Range(0f, randomFactor),
+            Random.Range(0f, randomFactor));
+        float randomAngle = Random.Range(-randomFactor, randomFactor);
+
+        if (collision.gameObject.CompareTag("Unbreakable"))
         {
             AudioClip clip = ballSounds[UnityEngine.Random.Range(0, ballSounds.Length)];
             audioSource.PlayOneShot(clip);
+            //rb.velocity += velocityTweak;
+            rb.velocity = Quaternion.Euler(0, 0, randomAngle) * rb.velocity;
         }
     }
 }
